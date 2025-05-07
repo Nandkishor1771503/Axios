@@ -7,6 +7,7 @@ function Home() {
   const bodyInputRef = useRef(null);
 
   const [loading, setLoding] = useState(false);
+  const [process, setProcess] = useState(false);
   const [data, setData] = useState([]);
   const [editId, setEditId] = useState(null); //  Track which item is being edited
 
@@ -37,7 +38,7 @@ function Home() {
   const Update = (id) => {
     const updatedTitle = titleInputRef.current.value;
     const updatedBody = bodyInputRef.current.value;
-
+    setProcess(true);
     api
       .put(`/posts/${id}`, {
         title: updatedTitle,
@@ -53,7 +54,8 @@ function Home() {
         );
         setEditId(null); // exit edit mode
       })
-      .catch((err) => console.error("Failed to update:", err));
+      .catch((err) => console.error("Failed to update:", err))
+      .finally(() => setProcess(false));
   };
 
   const getRefsFromChild = (titleEl, bodyEl) => {
@@ -98,7 +100,7 @@ function Home() {
                       (bodyInputRef.current.value = "");
                   }}
                 >
-                  Done
+                  {process ? "processing..." : "Done"}
                 </button>
               ) : (
                 <button

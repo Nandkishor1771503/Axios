@@ -19,7 +19,7 @@ function Input({ setData, api, toParent, setEdit, editId, Update }) {
       .then((res) => setData((prevData) => [...prevData, res.data])) // Append new data   ( *** )
       .catch((err) => console.error("Error adding post:", err));
 
-    // Clear input fields
+   
     titleRef.current.value = "";
     bodyRef.current.value = "";
   };
